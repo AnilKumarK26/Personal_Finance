@@ -1,297 +1,222 @@
-💰 Personal Finance Assistant
-A comprehensive web-based personal finance management application that helps users track income, expenses, and analyze their financial health with advanced features like receipt scanning and interactive analytics.
+# 💰 Personal Finance Assistant
 
-🌟 Features
-Core Functionality
-Transaction Management: Add, edit, delete, and view all financial transactions
+A modern, full-stack web application for tracking personal finances with advanced features including receipt scanning, analytics, and intelligent categorization.
 
-Smart Categorization: Automatic categorization of expenses and income
+## ✨ Features
 
-Advanced Filtering: Filter transactions by date range, type, and category
+### Core Functionality
+- **Transaction Management**: Add, edit, delete, and view income/expense transactions
+- **Smart Categorization**: Automatic categorization with custom category support
+- **Advanced Filtering**: Filter transactions by date range, type, and category
+- **Real-time Analytics**: Interactive charts and financial summaries
 
-Pagination Support: Efficiently browse through large transaction datasets
+### Advanced Features
+- **Receipt Scanner**: OCR-powered receipt processing with automatic transaction extraction
+- **Dashboard Analytics**: Visual insights with Chart.js integration
+- **Responsive Design**: Modern UI with glassmorphism effects and smooth animations
+- **Data Export**: Export transactions for external analysis
+- **Pagination**: Efficient handling of large transaction datasets
 
-Real-time Analytics: Interactive charts and financial insights
+### Technical Features
+- **REST API**: Complete backend API with MongoDB integration
+- **File Upload**: Support for multiple image formats and PDFs
+- **Error Handling**: Comprehensive error handling and user feedback
+- **Real-time Updates**: Auto-refresh functionality
 
-Advanced Features
-Receipt Scanner: Upload receipt images/PDFs for automatic transaction extraction using OCR
+## 🛠️ Tech Stack
 
-Interactive Dashboard: Real-time financial overview with summary cards
+### Frontend
+- **HTML5/CSS3**: Modern responsive design
+- **JavaScript**: Vanilla JS with ES6+ features
+- **Chart.js**: Interactive data visualizations
+- **CSS Grid/Flexbox**: Advanced layout system
 
-Data Visualization: Multiple chart types including doughnut, line, and bar charts
+### Backend
+- **Python 3.8+**: Core backend language
+- **Flask**: Web framework
+- **MongoDB**: NoSQL database
+- **PyMongo**: MongoDB Python driver
 
-Responsive Design: Mobile-friendly interface that works on all devices
+### Additional Libraries
+- **Flask-CORS**: Cross-origin resource sharing
+- **Werkzeug**: File handling utilities
+- **Pillow**: Image processing
+- **PyPDF2**: PDF text extraction
+- **EasyOCR**: OCR functionality
 
-Drag & Drop: Easy file upload with drag-and-drop functionality
+## 🚀 Installation
 
-Analytics & Insights
-Income vs Expenses: Visual comparison of financial inflows and outflows
+### Prerequisites
+- Python 3.8 or higher
+- MongoDB installed and running
+- Tesseract OCR engine (for receipt scanning)
 
-Monthly Trends: Track financial patterns over time
+### Step 1: Clone the Repository
+```bash
+git clone https://github.com/AnilKumarK26/Personal_Finance.git
+cd Personal_Finance
+```
 
-Category Breakdown: Detailed expense analysis by category
-
-Financial Health Indicators: Net balance and transaction counts
-
-🛠️ Technology Stack
-Frontend
-HTML5: Semantic markup and structure
-
-CSS3: Modern styling with gradients, animations, and responsive design
-
-JavaScript (ES6+): Dynamic functionality and API interactions
-
-Chart.js: Interactive data visualizations
-
-Backend
-Python: Core backend language
-
-Flask: Lightweight web framework
-
-MongoDB: NoSQL database for transaction storage
-
-OCR Technology: Receipt text extraction and parsing
-
-APIs & Libraries
-RESTful API: Clean API design for frontend-backend communication
-
-File Upload: Support for multiple image and PDF formats
-
-Date Handling: Advanced date filtering and processing
-
-📁 Project Structure
-text
-personal-finance-assistant/
-├── app.py                 # Flask backend application
-├── database.py           # Database connection and operations
-├── index.html           # Main frontend application
-├── styles.css           # Additional styling (if separated)
-├── requirements.txt     # Python dependencies
-├── README.md           # Project documentation
-└── uploads/            # Receipt upload directory
-🚀 Installation & Setup
-Prerequisites
-Python 3.8 or higher
-
-MongoDB installed and running
-
-Modern web browser
-
-Backend Setup
-Clone the repository
-
-bash
-git clone https://github.com/yourusername/personal-finance-assistant.git
-cd personal-finance-assistant
-Create virtual environment
-
-bash
+### Step 2: Set Up Virtual Environment
+```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-Install dependencies
+```
 
-bash
+### Step 3: Install Dependencies
+```bash
 pip install -r requirements.txt
-Configure MongoDB
+```
 
-Ensure MongoDB is running on localhost:27017
+### Step 4: Configure MongoDB
+Ensure MongoDB is running on `localhost:27017` (default port).
 
-The application will automatically create the required database and collections
-
-Start the Flask server
-
-bash
+### Step 5: Run the Application
+```bash
 python app.py
-Frontend Setup
-Open the application
+```
+
+The application will be available at `http://localhost:5000`
+
+## 📁 Project Structure
+
+```
+personal-finance-assistant/
+├── app.py                 # Main Flask application
+├── database.py
+├── ocr_processor.py
+├── analytics.py   
+├── requirements.txt       # Python dependencies
+├── README.md             # This file
+├── uploads/              # Receipt upload directory
+├── templates/
+│   ├── index.html        # Main frontend application
+│   └── styles.css        # Additional styles (optional)
+
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+Create a `.env` file in the root directory:
+
+```env
+# MongoDB Configuration
+MONGODB_URI=mongodb://localhost:27017/
+DATABASE_NAME=personal_finance
+
+# Flask Configuration
+FLASK_ENV=development
+SECRET_KEY=your-secret-key-here
+
+# File Upload Configuration
+UPLOAD_FOLDER=uploads
+MAX_CONTENT_LENGTH=16777216  # 16MB in bytes
+
+```
+
+### Database Setup
+The application will automatically create the necessary collections in MongoDB:
+- `transactions`: Stores all financial transactions
+- `categories`: Stores transaction categories (auto-generated)
+
+## 📊 API Documentation
+
+### Transactions
+
+#### Get All Transactions
+```http
+GET /api/transactions
+```
+
+**Query Parameters:**
+- `start_date` (optional): Filter by start date (YYYY-MM-DD)
+- `end_date` (optional): Filter by end date (YYYY-MM-DD)
+- `type` (optional): Filter by type (income/expense)
+- `category` (optional): Filter by category
+
+#### Create Transaction
+```http
+POST /api/transactions
+```
+
+**Request Body:**
+```json
+{
+  "type": "expense",
+  "amount": 25.50,
+  "category": "Food",
+  "description": "Lunch at restaurant",
+  "date": "2024-01-15"
+}
+```
+
+#### Update Transaction
+```http
+PUT /api/transactions/{id}
+```
+
+#### Delete Transaction
+```http
+DELETE /api/transactions/{id}
+```
+
+### Analytics
+
+#### Get Summary
+```http
+GET /api/analytics/summary
+```
+
+**Response:**
+```json
+{
+  "total_income": 5000.00,
+  "total_expenses": 3500.00,
+  "net_balance": 1500.00,
+  "income_count": 12,
+  "expense_count": 45
+}
+```
+
+#### Get Expenses by Category
+```http
+GET /api/analytics/expenses-by-category
+```
+
+### Receipt Processing
+
+#### Upload Receipt
+```http
+POST /api/upload-receipt
+```
+
+**Request:** Multipart form data with file
+
+**Response:**
+```json
+{
+  "extracted_text": "Receipt text...",
+  "parsed_info": {
+    "merchant": "Store Name",
+    "total_amount": 25.50,
+    "date": "2024-01-15",
+    "items": ["Item 1", "Item 2"]
+  },
+  "suggested_transaction": {
+    "type": "expense",
+    "amount": 25.50,
+    "category": "Shopping",
+    "description": "Purchase at Store Name",
+    "date": "2024-01-15"
+  }
+}
+```
+
+### 🐛 Known Issues
+- Receipt OCR accuracy depends on image quality
+
+- Large file uploads may take time to process
+
+- Charts require modern browser support
 
-Navigate to http://localhost:5000 in your web browser
-
-The frontend is served directly by Flask
-
-📊 API Endpoints
-Transactions
-GET /api/transactions - Retrieve transactions with pagination and filtering
-
-POST /api/transactions - Create a new transaction
-
-PUT /api/transactions/<id> - Update an existing transaction
-
-DELETE /api/transactions/<id> - Delete a transaction
-
-Analytics
-GET /api/analytics/summary - Get financial summary data
-
-GET /api/analytics/expenses-by-category - Get expense breakdown by category
-
-Categories
-GET /api/categories - Get all transaction categories
-
-Receipt Processing
-POST /api/upload-receipt - Upload and process receipt files
-
-🎯 Usage Guide
-Adding Transactions
-Click the "Add Transaction" button
-
-Fill in the transaction details:
-
-Type (Income/Expense)
-
-Amount
-
-Category
-
-Description
-
-Date
-
-Submit the form
-
-Using Receipt Scanner
-Navigate to the "Receipt Scanner" tab
-
-Upload an image or PDF receipt
-
-Review the extracted information
-
-Create or edit the suggested transaction
-
-Viewing Analytics
-Go to the "Analytics" tab
-
-View interactive charts:
-
-Income vs Expenses (Doughnut chart)
-
-Monthly Trends (Line chart)
-
-Expenses by Category (Bar chart)
-
-Filtering Transactions
-Use the filter controls in the Transactions tab:
-
-Date range selection
-
-Transaction type filter
-
-Category filter
-
-Pagination controls allow browsing through results
-
-🔧 Configuration
-Database Configuration
-python
-# In database.py
-MONGODB_URI = "mongodb://localhost:27017/"
-DATABASE_NAME = "finance_assistant"
-API Configuration
-javascript
-// In index.html
-const API_BASE_URL = 'http://localhost:5000/api';
-📱 Responsive Design
-The application is fully responsive and optimized for:
-
-Desktop: Full-featured experience with side-by-side layouts
-
-Tablet: Adapted layouts with touch-friendly controls
-
-Mobile: Single-column layout with optimized navigation
-
-🔒 Security Features
-Input Validation: Server-side validation for all user inputs
-
-File Type Validation: Restricted file uploads to safe formats
-
-Error Handling: Comprehensive error handling and user feedback
-
-Data Sanitization: Protection against common web vulnerabilities
-
-🎨 UI/UX Features
-Modern Design: Clean, professional interface with gradient backgrounds
-
-Interactive Elements: Hover effects and smooth transitions
-
-Loading States: Visual feedback during data processing
-
-Alert System: Success and error notifications
-
-Keyboard Shortcuts:
-
-Ctrl+N: Add new transaction
-
-Escape: Close modals
-
-📈 Performance Optimizations
-Pagination: Efficient handling of large datasets
-
-Lazy Loading: Charts load only when needed
-
-Caching: Browser caching for static assets
-
-Optimized Queries: Database queries with proper indexing
-
-🤝 Contributing
-Fork the repository
-
-Create a feature branch (git checkout -b feature/AmazingFeature)
-
-Commit your changes (git commit -m 'Add some AmazingFeature')
-
-Push to the branch (git push origin feature/AmazingFeature)
-
-Open a Pull Request
-
-📋 Future Enhancements
- User authentication and multi-user support
-
- Bank account integration
-
- Budget planning and alerts
-
- Export functionality (PDF, Excel)
-
- Mobile app development
-
- AI-powered financial insights
-
- Recurring transaction automation
-
- Investment tracking
-
-🐛 Known Issues
-Receipt OCR accuracy depends on image quality
-
-Large file uploads may take time to process
-
-Charts require modern browser support
-
-📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-👨‍💻 Author
-Your Name
-
-GitHub: @yourusername
-
-Email: your.email@example.com
-
-🙏 Acknowledgments
-Chart.js for beautiful data visualizations
-
-Flask community for excellent documentation
-
-MongoDB for reliable data storage
-
-OCR libraries for receipt processing capabilities
-
-📞 Support
-If you encounter any issues or have questions:
-
-Check the Issues page
-
-Create a new issue with detailed description
-
-Contact the maintainer directly
-
-Made with ❤️ for better financial management
